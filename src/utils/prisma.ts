@@ -3,21 +3,24 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const dbUrl = process.env.DATABASE_URL;
-const directUrl = process.env.DIRECT_URL;
+let dbUrl = process.env.DATABASE_URL;
 
-console.log('[Prisma Config] Checking environment variables...');
+console.log('[Prisma Config] Initializing...');
 
 if (!dbUrl) {
-  console.error('[Prisma Config] CRITICAL: DATABASE_URL is missing or empty.');
+  console.error('[Prisma Config] CRITICAL: DATABASE_URL is missing.');
 } else {
-  // Mask password for safety
-  const maskedUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
-  console.log(`[Prisma Config] DATABASE_URL is set: ${maskedUrl}`);
+  // Sanitize URL: remove quotes and whitespace
+  dbUrl = dbUrl.trim().replace(/^["']|["']$/g, '');
   
-  if (!dbUrl.startsWith('postgres://') && !dbUrl.startsWith('postgresql://')) {
-     console.error('[Prisma Config] CRITICAL: DATABASE_URL does not start with postgres:// or postgresql://');
-  }
+  const maskedUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
+  console.log(`[Prisma Config] Using sanitized DATABASE_URL: ${maskedUrl}`);
 }
 
-export const prisma = new PrismaClient();
+export const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: dbUrl,
+    },
+  },
+});
