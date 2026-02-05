@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { AdminDashboard } from './AdminDashboard';
-import { ArrowRightLeft, ArrowUpCircle, ArrowDownCircle, LogOut, Wallet, RefreshCw, LayoutDashboard, History } from 'lucide-react';
+import { ArrowRightLeft, ArrowUpCircle, ArrowDownCircle, LogOut, Wallet, RefreshCw, LayoutDashboard, History, FileText } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 // Componente de botão de ação (Card de Operação)
