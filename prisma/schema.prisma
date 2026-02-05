@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  name          String?
+  balanceBrl    Decimal       @default(0)
+  balanceUsdc   Decimal       @default(0)
+  walletAddress String?       // Endereço na blockchain para onde enviar/liquidar
+  password      String?       // Senha opcional (obrigatória para admins)
+  role          String        @default("USER") // USER | ADMIN
+  transactions  Transaction[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Transaction {
+  id              String            @id @default(uuid())
+  userId          String
+  user            User              @relation(fields: [userId], references: [id])
+  type            String            // Was Enum
+  amount          Decimal
+  status          String            @default("PENDING") // Was Enum
+  pixCode         String?           // Código Copia e Cola do Pix
+  pixId           String?           // ID da transação no gateway Pix
+  txHash          String?           // Hash da transação na blockchain
+  description     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
