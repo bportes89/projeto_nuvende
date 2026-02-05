@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../services/api';
-import { CheckCircle, XCircle, Clock, FileText } from 'lucide-react';
+import { CheckCircle, XCircle, Clock } from 'lucide-react';
 
 export function AdminDashboard() {
   const [transactions, setTransactions] = useState<any[]>([]);
