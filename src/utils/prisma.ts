@@ -17,6 +17,12 @@ if (!dbUrl) {
   console.log(`[Prisma Config] Using sanitized DATABASE_URL: ${maskedUrl}`);
 }
 
+const directUrl = process.env.DIRECT_URL;
+if (directUrl) {
+  const maskedDirectUrl = directUrl.replace(/:([^:@]+)@/, ':****@');
+  console.log(`[Prisma Config] Using sanitized DIRECT_URL: ${maskedDirectUrl}`);
+}
+
 export const prisma = new PrismaClient({
   datasources: {
     db: {
