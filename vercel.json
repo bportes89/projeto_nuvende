@@ -8,9 +8,5 @@
     "api/index.ts": {
       "maxDuration": 10
     }
-  },
-  "env": {
-    "DATABASE_URL": "process.env.DATABASE_URL",
-    "NUVENDE_API_KEY": "process.env.NUVENDE_API_KEY"
   }
 }
